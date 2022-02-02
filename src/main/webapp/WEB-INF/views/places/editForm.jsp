@@ -9,7 +9,7 @@
 </head>
 <body>
 <h1>Cadastro de Local</h1>
-<form:form method="POST">
+<form:form method="POST" modelAttribute="editPlaceForm">
     <label for="name">Nome</label>
     <form:input type="text" path="name" id="name" placeholder="Nome" maxlength="100" value="${placeEditView.name}" />
     <form:errors path="name" />

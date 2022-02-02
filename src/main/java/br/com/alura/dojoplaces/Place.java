@@ -13,24 +13,20 @@ public class Place {
 
     @NotBlank
     @Pattern(regexp = "[a-zA-Z0-9]+")
-    private final String code;
+    @Column(unique = true)
+    private String code;
     @NotBlank @Size(max = 100)
-    private final String name;
+    private String name;
     @NotBlank @Size(max = 100)
-    private final String district;
+    private String district;
     @NotBlank @Size(max = 100)
-    private final String city;
+    private String city;
 
     private final LocalDateTime createdAt = LocalDateTime.now();
     private LocalDateTime updatedAt;
 
     @Deprecated
-    protected Place(){
-        this.code = null;
-        this.name = null;
-        this.district = null;
-        this.city = null;
-    }
+    protected Place(){}
 
     public Place(String code, String name, String district, String city) {
         this.code = code;
@@ -53,5 +49,13 @@ public class Place {
 
     public String getCity() {
         return city;
+    }
+
+    public void updateFrom(EditPlaceForm form) {
+        this.code = form.code();
+        this.name = form.name();
+        this.district = form.district();
+        this.city = form.city();
+        this.updatedAt = LocalDateTime.now();
     }
 }

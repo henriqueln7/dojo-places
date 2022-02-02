@@ -33,15 +33,27 @@ public class PlaceController {
         return "redirect:/places/";
     }
 
-    @GetMapping("/places/{id}")
-    public String editPlaceForm(@PathVariable Long id, Model model) {
+    @GetMapping("/places/{id}/edit")
+    public String editPlaceForm(@PathVariable Long id, Model model, EditPlaceForm editPlaceForm) {
+        Place place = placeRepository.findById(id)
+                                     .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+
+        model.addAttribute("placeEditView", new PlaceEditView(place));
+        return "places/editForm";
+    }
+
+    @PostMapping("/places/{id}/edit")
+    public String editPlace(@PathVariable Long id, Model model, @Valid EditPlaceForm editPlaceForm, BindingResult result) {
+        if (result.hasErrors()) {
+            return editPlaceForm(id, model, editPlaceForm);
+        }
 
         Place place = placeRepository.findById(id)
                                      .orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
 
+        place.updateFrom(editPlaceForm);
+        placeRepository.save(place);
 
-
-        model.addAttribute("placeEditView", new PlaceEditView(place));
-        return "places/editForm";
+        return "redirect:/places/" + id + "/edit";
     }
 }
