@@ -1,13 +1,12 @@
 package br.com.alura.dojoplaces;
 
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.Size;
+import javax.validation.constraints.*;
 
 public record CreatePlaceForm(@NotBlank @Size(max = 100) String name,
-                              @NotBlank
+                              @NotBlank @Pattern(regexp = "/\\w/") String code,
                               @NotBlank @Size(max = 100) String district,
                               @NotBlank @Size(max = 100) String city) {
     public Place toModel() {
-        return new Place(this.name, this.district, this.city);
+        return new Place(this.code, this.name, this.district, this.city);
     }
 }

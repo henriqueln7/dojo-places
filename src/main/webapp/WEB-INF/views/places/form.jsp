@@ -12,12 +12,12 @@
         <form method="POST">
             <label for="name">Nome</label>
             <input type="text" name="name" id="name" placeholder="Nome" maxlength="100">
-            <label for="name">Código</label>
-            <input type="text" name="name" id="code" placeholder="Código" maxlength="100">
-            <label for="name">Bairro</label>
-            <input type="text" name="district" id="name" placeholder="Bairro" maxlength="100">
-            <label for="name">Cidade</label>
-            <input type="text" name="city" id="name" placeholder="Cidade" maxlength="100">
+            <label for="code">Código</label>
+            <input type="text" name="code" id="code" placeholder="Código" pattern="\w">
+            <label for="district">Bairro</label>
+            <input type="text" name="district" id="district" placeholder="Bairro" maxlength="100">
+            <label for="city">Cidade</label>
+            <input type="text" name="city" id="city" placeholder="Cidade" maxlength="100">
             <input type="submit" value="Cadastrar local" />
         </form>
     </body>
