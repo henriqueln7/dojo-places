@@ -12,7 +12,7 @@ public class Place {
     private Long id;
 
     @NotBlank
-    //TODO Fazer regex aqui e no form para validar se não tem caracteres especiais ou espaço em branco
+    @Pattern(regexp = "[a-zA-Z0-9]+")
     private final String code;
     @NotBlank @Size(max = 100)
     private final String name;
@@ -37,5 +37,21 @@ public class Place {
         this.name = name;
         this.district = district;
         this.city = city;
+    }
+
+    public String getCode() {
+        return code;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getDistrict() {
+        return district;
+    }
+
+    public String getCity() {
+        return city;
     }
 }

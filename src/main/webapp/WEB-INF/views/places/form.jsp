@@ -9,16 +9,20 @@
     </head>
     <body>
         <h1>Cadastro de Local</h1>
-        <form method="POST">
+        <form:form method="POST" modelAttribute="createPlaceForm">
             <label for="name">Nome</label>
-            <input type="text" name="name" id="name" placeholder="Nome" maxlength="100">
+            <form:input type="text" path="name" id="name" placeholder="Nome" maxlength="100" />
+            <form:errors path="name" />
             <label for="code">Código</label>
-            <input type="text" name="code" id="code" placeholder="Código">
+            <form:input type="text" path="code" id="code" placeholder="Código" />
+            <form:errors path="code" />
             <label for="district">Bairro</label>
-            <input type="text" name="district" id="district" placeholder="Bairro" maxlength="100">
+            <form:input type="text" path="district" id="district" placeholder="Bairro" maxlength="100"/>
+            <form:errors path="district" />
             <label for="city">Cidade</label>
-            <input type="text" name="city" id="city" placeholder="Cidade" maxlength="100">
+            <form:input type="text" path="city" id="city" placeholder="Cidade" maxlength="100"/>
+            <form:errors path="city" />
             <input type="submit" value="Cadastrar local" />
-        </form>
+        </form:form>
     </body>
 </html>
