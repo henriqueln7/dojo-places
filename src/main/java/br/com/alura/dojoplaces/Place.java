@@ -2,6 +2,7 @@ package br.com.alura.dojoplaces;
 
 import javax.persistence.*;
 import javax.validation.constraints.*;
+import java.time.LocalDateTime;
 
 @Entity
 public class Place {
@@ -10,17 +11,26 @@ public class Place {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotBlank @Pattern(regexp = "/\\w/")
-    private String code;
+    @NotBlank
+    //TODO Fazer regex aqui e no form para validar se não tem caracteres especiais ou espaço em branco
+    private final String code;
     @NotBlank @Size(max = 100)
-    private String name;
+    private final String name;
     @NotBlank @Size(max = 100)
-    private String district;
+    private final String district;
     @NotBlank @Size(max = 100)
-    private String city;
+    private final String city;
+
+    private final LocalDateTime createdAt = LocalDateTime.now();
+    private LocalDateTime updatedAt;
 
     @Deprecated
-    protected Place(){}
+    protected Place(){
+        this.code = null;
+        this.name = null;
+        this.district = null;
+        this.city = null;
+    }
 
     public Place(String code, String name, String district, String city) {
         this.code = code;

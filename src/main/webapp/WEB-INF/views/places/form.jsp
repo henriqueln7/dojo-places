@@ -13,7 +13,7 @@
             <label for="name">Nome</label>
             <input type="text" name="name" id="name" placeholder="Nome" maxlength="100">
             <label for="code">Código</label>
-            <input type="text" name="code" id="code" placeholder="Código" pattern="\w">
+            <input type="text" name="code" id="code" placeholder="Código">
             <label for="district">Bairro</label>
             <input type="text" name="district" id="district" placeholder="Bairro" maxlength="100">
             <label for="city">Cidade</label>
