@@ -4,6 +4,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
@@ -13,9 +14,16 @@ import javax.validation.Valid;
 public class PlaceController {
 
     private final PlaceRepository placeRepository;
+    private final UniqueCodeValidator uniqueCodeValidator;
 
-    public PlaceController(PlaceRepository placeRepository) {
+    public PlaceController(PlaceRepository placeRepository, UniqueCodeValidator uniqueCodeValidator) {
         this.placeRepository = placeRepository;
+        this.uniqueCodeValidator = uniqueCodeValidator;
+    }
+
+    @InitBinder({"createPlaceForm", "editPlaceForm"})
+    public void init(WebDataBinder binder) {
+        binder.addValidators(uniqueCodeValidator);
     }
 
     @GetMapping("/places")
