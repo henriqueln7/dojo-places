@@ -5,17 +5,17 @@ import org.springframework.validation.Errors;
 import org.springframework.validation.Validator;
 
 @Component
-public class UniqueCodeValidator implements Validator {
+public class CreatePlaceValidator implements Validator {
 
     private final PlaceRepository placeRepository;
 
-    public UniqueCodeValidator(PlaceRepository placeRepository) {
+    public CreatePlaceValidator(PlaceRepository placeRepository) {
         this.placeRepository = placeRepository;
     }
 
     @Override
     public boolean supports(Class<?> clazz) {
-        return HasCode.class.isAssignableFrom(clazz);
+        return CreatePlaceForm.class.isAssignableFrom(clazz);
     }
 
     @Override
@@ -24,11 +24,10 @@ public class UniqueCodeValidator implements Validator {
             return;
         }
 
-        HasCode form = (HasCode) target;
+        CreatePlaceForm form = (CreatePlaceForm) target;
 
         if (placeRepository.existsByCode(form.code())) {
-            //TODO Validar se não é de outro local
-            errors.reject("place.code.already.exists", "O código do lugar já existe");
+            errors.rejectValue("code", "place.code.already.exists", "O código do lugar já existe");
         }
     }
 }

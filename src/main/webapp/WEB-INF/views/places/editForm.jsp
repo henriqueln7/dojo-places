@@ -10,13 +10,7 @@
 </head>
 <body>
 <h1>Atualização de Local</h1>
-<c:if test="${not empty errors}">
-    <ul>
-        <c:forEach items="${errors}" var="error">
-            <li>${error}</li>
-        </c:forEach>
-    </ul>
-</c:if>
+
 <form:form method="POST" modelAttribute="editPlaceForm">
     <label for="name">Nome</label>
     <form:input type="text" path="name" id="name" placeholder="Nome" maxlength="100" value="${placeEditView.name}" />

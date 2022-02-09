@@ -7,7 +7,6 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
 
@@ -15,28 +14,37 @@ import javax.validation.Valid;
 public class PlaceController {
 
     private final PlaceRepository placeRepository;
-    private final UniqueCodeValidator uniqueCodeValidator;
+    private final EditPlaceValidator editPlaceValidator;
+    private final CreatePlaceValidator createPlaceValidator;
 
-    public PlaceController(PlaceRepository placeRepository, UniqueCodeValidator uniqueCodeValidator) {
+    public PlaceController(PlaceRepository placeRepository,
+                           EditPlaceValidator editPlaceValidator,
+                           CreatePlaceValidator createPlaceValidator) {
         this.placeRepository = placeRepository;
-        this.uniqueCodeValidator = uniqueCodeValidator;
+        this.editPlaceValidator = editPlaceValidator;
+        this.createPlaceValidator = createPlaceValidator;
     }
 
-    @InitBinder({"createPlaceForm", "editPlaceForm"})
+
+    @InitBinder("createPlaceForm")
+    public void initBinder(WebDataBinder binder) {
+        binder.addValidators(createPlaceValidator);
+    }
+
+    @InitBinder("editPlaceForm")
     public void init(WebDataBinder binder) {
-        binder.addValidators(uniqueCodeValidator);
+        binder.addValidators(editPlaceValidator);
     }
 
     @GetMapping("/places")
-    public String createPlaceForm(Model model, CreatePlaceForm createPlaceForm) {
+    public String createPlaceForm(CreatePlaceForm createPlaceForm) {
         return "places/form";
     }
 
     @PostMapping("/places")
-    public String createPlace(@Valid CreatePlaceForm createPlaceForm, BindingResult result, Model model) {
+    public String createPlace(@Valid CreatePlaceForm createPlaceForm, BindingResult result) {
         if (result.hasErrors()) {
-            model.addAttribute("errors", result.getAllErrors().stream().map(e -> e.getDefaultMessage()).toList());
-            return createPlaceForm(model, createPlaceForm);
+            return createPlaceForm(createPlaceForm);
         }
         Place newPlace = createPlaceForm.toModel();
         placeRepository.save(newPlace);
@@ -55,7 +63,6 @@ public class PlaceController {
     @PostMapping("/places/{id}/edit")
     public String editPlace(@PathVariable Long id, Model model, @Valid EditPlaceForm editPlaceForm, BindingResult result) {
         if (result.hasErrors()) {
-            model.addAttribute("errors", result.getAllErrors().stream().map(e -> e.getDefaultMessage()).toList());
             return editPlaceForm(id, model, editPlaceForm);
         }
 
