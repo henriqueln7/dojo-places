@@ -1,5 +1,6 @@
 <%@ page contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
 <!DOCTYPE html>
 <html>
@@ -8,7 +9,14 @@
     <meta charset="UTF-8" />
 </head>
 <body>
-<h1>Cadastro de Local</h1>
+<h1>Atualização de Local</h1>
+<c:if test="${not empty errors}">
+    <ul>
+        <c:forEach items="${errors}" var="error">
+            <li>${error}</li>
+        </c:forEach>
+    </ul>
+</c:if>
 <form:form method="POST" modelAttribute="editPlaceForm">
     <label for="name">Nome</label>
     <form:input type="text" path="name" id="name" placeholder="Nome" maxlength="100" value="${placeEditView.name}" />

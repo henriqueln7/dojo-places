@@ -7,6 +7,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import javax.validation.Valid;
 
@@ -27,14 +28,15 @@ public class PlaceController {
     }
 
     @GetMapping("/places")
-    public String createPlaceForm(CreatePlaceForm createPlaceForm) {
+    public String createPlaceForm(Model model, CreatePlaceForm createPlaceForm) {
         return "places/form";
     }
 
     @PostMapping("/places")
-    public String createPlace(@Valid CreatePlaceForm createPlaceForm, BindingResult result) {
+    public String createPlace(@Valid CreatePlaceForm createPlaceForm, BindingResult result, Model model) {
         if (result.hasErrors()) {
-            return createPlaceForm(createPlaceForm);
+            model.addAttribute("errors", result.getAllErrors().stream().map(e -> e.getDefaultMessage()).toList());
+            return createPlaceForm(model, createPlaceForm);
         }
         Place newPlace = createPlaceForm.toModel();
         placeRepository.save(newPlace);
@@ -53,6 +55,7 @@ public class PlaceController {
     @PostMapping("/places/{id}/edit")
     public String editPlace(@PathVariable Long id, Model model, @Valid EditPlaceForm editPlaceForm, BindingResult result) {
         if (result.hasErrors()) {
+            model.addAttribute("errors", result.getAllErrors().stream().map(e -> e.getDefaultMessage()).toList());
             return editPlaceForm(id, model, editPlaceForm);
         }
 

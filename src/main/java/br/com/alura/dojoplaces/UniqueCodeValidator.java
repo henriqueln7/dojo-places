@@ -27,6 +27,7 @@ public class UniqueCodeValidator implements Validator {
         HasCode form = (HasCode) target;
 
         if (placeRepository.existsByCode(form.code())) {
+            //TODO Validar se não é de outro local
             errors.reject("place.code.already.exists", "O código do lugar já existe");
         }
     }
