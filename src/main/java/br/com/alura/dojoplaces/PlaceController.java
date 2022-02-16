@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
 
 import javax.validation.Valid;
+import java.util.List;
 
 @Controller
 public class PlaceController {
@@ -36,7 +37,7 @@ public class PlaceController {
         binder.addValidators(editPlaceValidator);
     }
 
-    @GetMapping("/places")
+    @GetMapping("/places/new")
     public String createPlaceForm(CreatePlaceForm createPlaceForm) {
         return "places/form";
     }
@@ -73,5 +74,12 @@ public class PlaceController {
         placeRepository.save(place);
 
         return "redirect:/places/" + id + "/edit";
+    }
+
+    @GetMapping("/places")
+    public String listPlaces(Model model) {
+        List<Place> places = placeRepository.findAll();
+        model.addAttribute("places", places.stream().map(place -> new PlaceView(place)).toList());
+        return "places/list";
     }
 }

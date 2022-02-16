@@ -58,4 +58,16 @@ public class Place {
         this.city = form.city();
         this.updatedAt = LocalDateTime.now();
     }
+
+    public Long getId() {
+        return this.id;
+    }
+
+    public LocalDateTime getCreatedAt() {
+        return createdAt;
+    }
+
+    public LocalDateTime getUpdatedAt() {
+        return updatedAt;
+    }
 }
