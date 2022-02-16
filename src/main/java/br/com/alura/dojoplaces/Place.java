@@ -3,6 +3,7 @@ package br.com.alura.dojoplaces;
 import javax.persistence.*;
 import javax.validation.constraints.*;
 import java.time.LocalDateTime;
+import java.util.Optional;
 
 @Entity
 public class Place {
@@ -67,7 +68,7 @@ public class Place {
         return createdAt;
     }
 
-    public LocalDateTime getUpdatedAt() {
-        return updatedAt;
+    public Optional<LocalDateTime> getUpdatedAt() {
+        return Optional.ofNullable(this.updatedAt);
     }
 }

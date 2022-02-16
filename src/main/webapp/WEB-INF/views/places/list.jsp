@@ -26,7 +26,7 @@
                 <td>${place.name}</td>
                 <td>${place.code}</td>
                 <td>${place.formattedCreatedAt}</td>
-                <td>-</td>
+                <td>${place.daysSinceLastUpdate}</td>
             </tr>
 
         </c:forEach>
