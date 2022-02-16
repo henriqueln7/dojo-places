@@ -79,7 +79,13 @@ public class PlaceController {
     @GetMapping("/places")
     public String listPlaces(Model model) {
         List<Place> places = placeRepository.findAll();
-        model.addAttribute("places", places.stream().map(place -> new PlaceView(place)).toList());
+        model.addAttribute("places", places.stream().map(PlaceView::new).toList());
         return "places/list";
+    }
+
+    @DeleteMapping("/places/{id}")
+    @ResponseBody
+    public void deletePlace(@PathVariable Long id) {
+        placeRepository.deleteById(id);
     }
 }
