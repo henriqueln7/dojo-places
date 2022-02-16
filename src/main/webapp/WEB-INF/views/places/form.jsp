@@ -11,7 +11,15 @@
     <body>
 
         <h1>Cadastro de Local</h1>
-        <form:form method="POST" modelAttribute="createPlaceForm">
+        <form:form method="POST" action="/places" modelAttribute="createPlaceForm">
+
+            <h3>Preencher por CEP: </h3>
+            <label>
+                Cep:
+                <input type="text" id="cep" />
+            </label>
+
+            <br />
             <label for="name">Nome</label>
             <form:input type="text" path="name" id="name" placeholder="Nome" maxlength="100" />
             <form:errors path="name" />
@@ -27,4 +35,21 @@
             <input type="submit" value="Cadastrar local" />
         </form:form>
     </body>
+
+<script>
+    const cepInput = document.getElementById("cep");
+    cepInput.addEventListener("input", (e) => {
+        e.preventDefault();
+        const cep = cepInput.value;
+        if (cep.length == 8) {
+            fetch('https://viacep.com.br/ws/'+ cep +'/json/')
+                .then(cep => cep.json())
+                .then(cep => {
+                    document.getElementById('city').value = cep.localidade;
+                    document.getElementById('district').value = cep.logradouro;
+                }).catch(err => console.log(err));
+        }
+
+    })
+</script>
 </html>
